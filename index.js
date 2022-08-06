@@ -24,6 +24,7 @@ var client_longitude = 34.0;
 var client_latitude = 34.0;
 let message = "LIVE NOW";
 let discoMode = false;
+let inkSplat = false;
 
 function generateRandCoords(){
     let randDigits = parseInt(Math.random() * Math.pow(10, 11));
@@ -85,7 +86,7 @@ app.post('/clientlocupdate', function (request, response) {
     
   })
 
-  app.post('/discoMode', function(request, response) {
+  app.post('/modeselection', function(request, response) {
     console.log('POST /')
     
     if (request.query.discoMode == "false"){
@@ -95,6 +96,7 @@ app.post('/clientlocupdate', function (request, response) {
         console.log("Disco mode disabled");
     } else if (request.query.discoMode == "true"){
         discoMode = true;
+        inkSplat = false;
         response.writeHead(200, {'Content-Type': 'text/html'})
         response.end('thanks, received')
         console.log("Disco mode enabled");
@@ -102,10 +104,32 @@ app.post('/clientlocupdate', function (request, response) {
         response.writeHead(200, {'Content-Type': 'text/html'})
         response.end('unable to update, check passcode')
     }
-    
-    
-    
+
+    if (request.query.inkSplat == "false"){
+        inkSplat = false;
+        response.writeHead(200, {'Content-Type': 'text/html'})
+        response.end('thanks, received')
+        console.log("Disco mode disabled");
+    } else if (request.query.inkSplat == "true"){
+        inkSplat = true;
+        discoMode = false;
+        response.writeHead(200, {'Content-Type': 'text/html'})
+        response.end('thanks, received')
+        console.log("Disco mode enabled");
+    } else {
+        response.writeHead(200, {'Content-Type': 'text/html'})
+        response.end('unable to update, check passcode')
+    }
   })
+
+  app.get('/getModesEnabled', function (req, res) {
+    let date_obj = new Date();
+    res.json({
+      discoMode_1 : discoMode,
+      inkSplat_1 : inkSplat
+    });
+  });
+
 
   app.post('/finished', function(request, response) {
     console.log('POST /')
