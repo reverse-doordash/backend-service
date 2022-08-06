@@ -1,9 +1,11 @@
 // Requiring express in our server
+const { json } = require('body-parser');
 const express = require('express');
 const app = express();
   
 require('dotenv').config();
 
+app.use(json());
 
 // Defining get request at '/' route
 app.get('/', function(req, res) {
@@ -46,6 +48,7 @@ app.post('/driverlocupdate', function(request, response) {
 
   app.post('/clientlocupdate', function(request, response) {
     console.log('POST /')
+    console.log(request);
     console.log(request.body);
     if (request.headers.passwd == process.env.SECURE_HEADER_PASSCODE){
         client_latitude = request.header.client_latitude;
