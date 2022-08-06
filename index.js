@@ -122,7 +122,7 @@ app.post('/clientlocupdate', function (request, response) {
     
   })
 
-  app.get('/getmessage', function (req, res) {
+  app.get('/getmessage.json', function (req, res) {
     let date_obj = new Date();
     res.json({
       msg: message
