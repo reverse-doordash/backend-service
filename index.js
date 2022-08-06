@@ -22,6 +22,7 @@ var driver_longitude = 34.0;
 var driver_latitude = 34.0;
 var client_longitude = 34.0;
 var client_latitude = 34.0;
+let message = "LIVE NOW";
 
 function generateRandCoords(){
     let randDigits = parseInt(Math.random() * Math.pow(10, 11));
@@ -102,6 +103,31 @@ app.post('/clientlocupdate', function (request, response) {
     
     
   })
+
+  app.post('/finished', function(request, response) {
+    console.log('POST /')
+    if (request.query.finishRide == "true"){
+        message = "RIDE ENDED";
+        response.writeHead(200, {'Content-Type': 'text/html'});
+        response.end('thanks, received');
+        console.log("ride has been finished");
+    } else if (request.query.finishRide == "false"){
+        message = "LIVE NOW";
+        response.writeHead(200, {'Content-Type': 'text/html'});
+        response.end('thanks, received');
+    } else {
+        response.writeHead(200, {'Content-Type': 'text/html'});
+        response.end('unable to update, check passcode');
+    }
+    
+  })
+
+  app.get('/getmessage', function (req, res) {
+    let date_obj = new Date();
+    res.json({
+      msg: message
+    });
+  });
 
   generateRandCoords();
   
