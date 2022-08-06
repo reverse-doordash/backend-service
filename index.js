@@ -13,10 +13,10 @@ app.get('/', function(req, res) {
 });
   
 //setting temporary placeholder values
-let driver_longitude = 34.000000000000;
-let driver_latitude = 34.000000000000;
-let client_longitude = 34.000000000000;
-let client_latitude = 34.000000000000;
+var driver_longitude = 34.000000000000;
+var driver_latitude = 34.000000000000;
+var client_longitude = 34.000000000000;
+var client_latitude = 34.000000000000;
 
 //to get a json with locations use
 app.get('/getlocs', function(req, res) {
