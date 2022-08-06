@@ -32,8 +32,8 @@ app.get('/getlocs', function(req, res) {
 app.post('/driverlocupdate', function(request, response) {
     console.log('POST /')
     if (request.headers.passwd == process.env.SECURE_HEADER_PASSCODE){
-        driver_latitude = request.headers.driver_latitude;
-        driver_longitude = request.headers.driver_longitude;
+        driver_latitude = request.body.driver_latitude;
+        driver_longitude = request.body.driver_longitude;
         response.writeHead(200, {'Content-Type': 'text/html'})
         response.end('thanks, received')
     }else {
@@ -47,15 +47,15 @@ app.post('/driverlocupdate', function(request, response) {
   app.post('/clientlocupdate', function(request, response) {
     console.log('POST /')
     if (request.headers.passwd == process.env.SECURE_HEADER_PASSCODE){
-        client_latitude = request.headers.client_latitude;
-        client_longitude = request.headers.client_longitude;
+        client_latitude = request.body.client_latitude;
+        client_longitude = request.body.client_longitude;
         response.writeHead(200, {'Content-Type': 'text/html'})
         response.end('thanks, received')
     } else {
         response.writeHead(200, {'Content-Type': 'text/html'})
         response.end('unable to update, check passcode')
     }
-    console.log(request);
+    console.log(request.body);
     
     
   })
