@@ -32,14 +32,14 @@ let inkSplat = false;
 function generateRandLatCoord(){
     driver_latitude = driver_latitude.toString().slice(0, -11);
     let randDigits = parseInt(Math.random() * Math.pow(10, 11)).toString();
-    driver_latitude = driver_latitude + randDigits;
+    driver_latitude = Number(driver_latitude + randDigits);
 
 }
 
 function generateRandLonCoord(){
   driver_longitude = driver_longitude.toString().slice(0, -11);
     let randDigits = parseInt(Math.random() * Math.pow(10, 11)).toString();
-    driver_longitude = driver_longitude + randDigits;
+    driver_longitude = Number(driver_longitude + randDigits);
 }
 
 
