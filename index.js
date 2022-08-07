@@ -64,10 +64,12 @@ app.post('/driverlocupdate', function (request, response) {
     driver_latitude = request.body.driver_latitude;
     driver_longitude = request.body.driver_longitude;
     response.writeHead(200, { 'Content-Type': 'text/html' });
-    response.end('thanks, received');
+    response.end('thanks, received driver position');
+    console.log("Updating driver position");
   } else {
     response.writeHead(200, { 'Content-Type': 'text/html' });
-    response.end('unable to update, check passcode');
+    response.end('unable to update driver, check passcode');
+    console.log("unable to update driver response")
   }
 });
 
@@ -78,10 +80,12 @@ app.post('/clientlocupdate', function (request, response) {
     client_latitude = request.body.client_latitude;
     client_longitude = request.body.client_longitude;
     response.writeHead(200, { 'Content-Type': 'text/html' });
-    response.end('thanks, received');
+    response.end('thanks, received client position');
+    console.log("Updating client position");
   } else {
     response.writeHead(200, { 'Content-Type': 'text/html' });
-    response.end('unable to update, check passcode');
+    response.end('unable to update client, check passcode');
+    console.log("Unable to update client")
   }
 });
 
