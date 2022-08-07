@@ -188,9 +188,10 @@ app.post('/clientlocupdate', function (request, response) {
     
   });
 
+
   app.post('/pullFront', function (req, res) {
     if (req.query.passwd ==process.env.SECURE_HEADER_PASSCODE){
-      exec(' cd /var/www/web && sudo git pull && sudo systemctl stop run_vite && sudo systemctl start run_vite');
+      //exec(' cd /var/www/web && sudo git pull && sudo systemctl stop run_vite && sudo systemctl start run_vite');
       res.json({
         msg: "Pulled"
       });
