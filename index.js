@@ -176,7 +176,7 @@ app.post('/clientlocupdate', function (request, response) {
 
   app.get('/pullBackend', function (req, res) {
     if (req.query.passwd ==process.env.SECURE_HEADER_PASSCODE){
-      exec('cd /var/www/backend-service && sudo git pull');
+      //exec('cd /var/www/backend-service && sudo git pull');
       res.json({
         msg: "Pulled"
       });
