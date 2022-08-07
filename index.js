@@ -30,15 +30,15 @@ let discoMode = false;
 let inkSplat = false;
 
 function generateRandLatCoord(){
-    driver_latitude = driver_latitude.toString().slice(0, -11);
-    let randDigits = parseInt(Math.random() * Math.pow(10, 11)).toString();
+    driver_latitude = driver_latitude.toString().slice(0, -5);
+    let randDigits = parseInt(Math.random() * Math.pow(10, 5)).toString();
     driver_latitude = Number(driver_latitude + randDigits);
     return driver_latitude;
 }
 
 function generateRandLonCoord(){
-    driver_longitude = driver_longitude.toString().slice(0, -11);
-    let randDigits = parseInt(Math.random() * Math.pow(10, 11)).toString();
+    driver_longitude = driver_longitude.toString().slice(0, -5);
+    let randDigits = parseInt(Math.random() * Math.pow(10, 5)).toString();
     driver_longitude = Number(driver_longitude + randDigits);
     return driver_longitude;
   }
@@ -71,11 +71,13 @@ app.get('/getlocs', function (req, res) {
 app.post('/driverlocupdate', function (request, response) {
   console.log('POST /');
   if (request.headers.passwd == process.env.SECURE_HEADER_PASSCODE) {
-    driver_latitude = request.body.driver_latitude;
-    driver_longitude = request.body.driver_longitude;
-    response.writeHead(200, { 'Content-Type': 'text/html' });
-    response.end('thanks, received driver position');
-    console.log("Updating driver position");
+    if (discoMode == false){
+      driver_latitude = request.body.driver_latitude;
+      driver_longitude = request.body.driver_longitude;
+      response.writeHead(200, { 'Content-Type': 'text/html' });
+      response.end('thanks, received driver position');
+      console.log("Updating driver position");
+    }
   } else {
     response.writeHead(200, { 'Content-Type': 'text/html' });
     response.end('unable to update driver, check passcode');
