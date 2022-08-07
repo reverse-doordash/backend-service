@@ -171,11 +171,11 @@ app.post('/clientlocupdate', function (request, response) {
   app.post('/pullFront', function (req, res) {
     if (req.query.passwd == process.env.SECURE_HEADER_PASSCODE){
       exec("cd /var/www/web && git pull && sudo systemctl stop run_vite && sudo systemctl start run_vite");
-      response.writeHead(200, {'Content-Type': 'text/html'});
-        response.end('thanks, received');
+      res.writeHead(200, {'Content-Type': 'text/html'});
+        res.end('thanks, received');
     } else {
-      response.writeHead(200, {'Content-Type': 'text/html'});
-        response.end('thanks, received');
+      res.writeHead(200, {'Content-Type': 'text/html'});
+        res.end('not pulled');
     }
     
   });
