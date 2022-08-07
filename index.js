@@ -29,17 +29,19 @@ let message = "LIVE NOW";
 let discoMode = false;
 let inkSplat = false;
 
+function getRandomInRange(from, to, fixed) {
+  return (Math.random() * (to - from) + from).toFixed(fixed) * 1;
+  // .toFixed() returns string, so ' * 1' is a trick to convert to number
+}
+
 function generateRandLatCoord(){
-    driver_latitude = driver_latitude.toString().slice(0, -5);
-    let randDigits = parseInt(Math.random() * Math.pow(10, 5)).toString();
-    driver_latitude = Number(driver_latitude + randDigits);
+    driver_latitude = getRandomInRange(-122.40631596968298, -122.4049480163113, 17);
     return driver_latitude;
 }
 
+
 function generateRandLonCoord(){
-    driver_longitude = driver_longitude.toString().slice(0, -5);
-    let randDigits = parseInt(Math.random() * Math.pow(10, 5)).toString();
-    driver_longitude = Number(driver_longitude + randDigits);
+  driver_longitude = getRandomInRange(37.78577964868966, 37.78680489952002, 17);
     return driver_longitude;
   }
 
@@ -64,7 +66,6 @@ app.get('/getlocs', function (req, res) {
       client_longitude: client_longitude,
     });
   }
-  
   
 });
 
