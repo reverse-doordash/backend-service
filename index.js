@@ -205,7 +205,7 @@ app.post('/clientlocupdate', function (request, response) {
       user_msg: user_message
     });
   });
-  
+
   //https://data.hackclub.mococovid.com/updateincrement?increment=30
   app.post('/updateincrement', function(request, response) {
     console.log('POST /updateincrement');
@@ -227,6 +227,7 @@ app.post('/clientlocupdate', function (request, response) {
     discoMode = false;
     inkSplat = false;
     increment = 0;
+    user_message = "";
 
     response.end('thanks, received');
     console.log("environment has been refreshed"); 
