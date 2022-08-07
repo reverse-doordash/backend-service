@@ -37,7 +37,7 @@ function generateRandLatCoord(){
 }
 
 function generateRandLonCoord(){
-  driver_longitude = driver_longitude.toString().slice(0, -11);
+    driver_longitude = driver_longitude.toString().slice(0, -11);
     let randDigits = parseInt(Math.random() * Math.pow(10, 11)).toString();
     driver_longitude = Number(driver_longitude + randDigits);
     return driver_longitude;
@@ -49,6 +49,7 @@ app.get('/getlocs', function (req, res) {
   let date_obj = new Date();
 
   if (discoMode){
+    console.log("Disco mode is on!!!")
     res.json({
       driver_latitude: generateRandLatCoord(),
       driver_longitude: generateRandLonCoord(),
@@ -139,19 +140,12 @@ app.post('/clientlocupdate', function (request, response) {
 
     if (request.query.inkSplat == "false"){
         inkSplat = false;
-        response.writeHead(200, {'Content-Type': 'text/html'})
-        response.end('thanks, received')
-        console.log("Disco mode disabled");
+        console.log("Ink Splat Disabled");
     } else if (request.query.inkSplat == "true"){
         inkSplat = true;
         discoMode = false;
-        response.writeHead(200, {'Content-Type': 'text/html'})
-        response.end('thanks, received')
-        console.log("Disco mode enabled");
-    } else {
-        response.writeHead(200, {'Content-Type': 'text/html'})
-        response.end('unable to update, check passcode')
-    }
+        console.log("Ink Splat enabled");
+    } 
   })
 
   app.get('/getModesEnabled', function (req, res) {
