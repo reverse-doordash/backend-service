@@ -20,42 +20,44 @@ app.get('/', function (req, res) {
 });
 
 //setting temporary placeholder values
-var driver_longitude = 34.0;
-var driver_latitude = 34.0;
-var client_longitude = 34.0;
-var client_latitude = 34.0;
+var driver_longitude = 37.78680489952002;
+var driver_latitude = -122.4049480163113;
+var client_longitude = 37.78662352047515;
+var client_latitude = -122.40631596968298;
+
 let message = "LIVE NOW";
 let discoMode = false;
 let inkSplat = false;
 
 function generateRandLatCoord(){
-    let randDigits = parseInt(Math.random() * Math.pow(10, 11));
-    console.log(randDigits);
+    driver_latitude = driver_latitude.toString().slice(0, -11);
+    let randDigits = parseInt(Math.random() * Math.pow(10, 11)).toString();
+    driver_latitude = driver_latitude + randDigits;
+
 }
 
 function generateRandLonCoord(){
-  let randDigits = parseInt(Math.random() * Math.pow(10, 11));
-  console.log(randDigits);
+  driver_longitude = driver_longitude.toString().slice(0, -11);
+    let randDigits = parseInt(Math.random() * Math.pow(10, 11)).toString();
+    driver_longitude = driver_longitude + randDigits;
 }
+
 
 //to get a json with locations use
 app.get('/getlocs', function (req, res) {
   let date_obj = new Date();
+
   if (discoMode){
+    generateRandLatCoord();
+    generateRandLonCoord();
+  } 
   res.json({
     driver_latitude: driver_latitude,
     driver_longitude: driver_longitude,
     client_latitude: client_latitude,
     client_longitude: client_longitude,
   });
-  } else {
-    res.json({
-      driver_latitude: driver_latitude,
-      driver_longitude: driver_longitude,
-      client_latitude: client_latitude,
-      client_longitude: client_longitude,
-    });
-  }
+  
 });
 
 app.post('/driverlocupdate', function (request, response) {
@@ -193,7 +195,6 @@ app.post('/clientlocupdate', function (request, response) {
 
 
 
-  
 // Setting the server to listen at port 3000
 app.listen(3000, function (req, res) {
   console.log('Server is running at port 3000');
