@@ -168,16 +168,14 @@ app.post('/clientlocupdate', function (request, response) {
     
   })
 
-  app.get('/pullFront', function (req, res) {
+  app.post('/pullFront', function (req, res) {
     if (req.query.passwd == process.env.SECURE_HEADER_PASSCODE){
       exec("cd /var/www/web && git pull && sudo systemctl stop run_vite && sudo systemctl start run_vite");
-      res.json({
-        msg: "Pulled"
-      });
+      response.writeHead(200, {'Content-Type': 'text/html'});
+        response.end('thanks, received');
     } else {
-      res.json({
-        msg: "Not Pulled, check passwd"
-      });
+      response.writeHead(200, {'Content-Type': 'text/html'});
+        response.end('thanks, received');
     }
     
   });
