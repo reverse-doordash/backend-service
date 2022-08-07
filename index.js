@@ -33,14 +33,15 @@ function generateRandLatCoord(){
     driver_latitude = driver_latitude.toString().slice(0, -11);
     let randDigits = parseInt(Math.random() * Math.pow(10, 11)).toString();
     driver_latitude = Number(driver_latitude + randDigits);
-
+    return driver_latitude;
 }
 
 function generateRandLonCoord(){
   driver_longitude = driver_longitude.toString().slice(0, -11);
     let randDigits = parseInt(Math.random() * Math.pow(10, 11)).toString();
     driver_longitude = Number(driver_longitude + randDigits);
-}
+    return driver_longitude;
+  }
 
 
 //to get a json with locations use
@@ -48,15 +49,21 @@ app.get('/getlocs', function (req, res) {
   let date_obj = new Date();
 
   if (discoMode){
-    generateRandLatCoord();
-    generateRandLonCoord();
-  } 
-  res.json({
-    driver_latitude: driver_latitude,
-    driver_longitude: driver_longitude,
-    client_latitude: client_latitude,
-    client_longitude: client_longitude,
-  });
+    res.json({
+      driver_latitude: generateRandLatCoord(),
+      driver_longitude: generateRandLonCoord(),
+      client_latitude: client_latitude,
+      client_longitude: client_longitude,
+    });
+  } else {
+    res.json({
+      driver_latitude: driver_latitude,
+      driver_longitude: driver_longitude,
+      client_latitude: client_latitude,
+      client_longitude: client_longitude,
+    });
+  }
+  
   
 });
 
