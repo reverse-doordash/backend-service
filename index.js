@@ -28,6 +28,7 @@ var client_latitude = -122.40631596968298;
 let message = "LIVE NOW";
 let discoMode = false;
 let inkSplat = false;
+let increment = 0;
 
 function getRandomInRange(from, to, fixed) {
   return (Math.random() * (to - from) + from).toFixed(fixed) * 1;
@@ -197,6 +198,33 @@ app.post('/clientlocupdate', function (request, response) {
     });
   });
 
+  app.get('/getincrement', function (req, res) {
+    res.json({
+      incre: increment
+    });
+  });
+
+  app.post('/updateincrement', function(request, response) {
+    console.log('POST /updateincrement');
+    increment += request.query.increment;
+    response.end('thanks, received');
+    console.log("increment has been updated"); 
+  })
+
+  app.post('/refresh', function(request, response) {
+    console.log('POST /refresh');
+    driver_longitude = 37.78680489952002;
+    driver_latitude = -122.4049480163113;
+    client_longitude = 37.78662352047515;
+    client_latitude = -122.406315969682
+    message = "LIVE NOW";
+    discoMode = false;
+    inkSplat = false;
+    increment = 0;
+
+    response.end('thanks, received');
+    console.log("environment has been refreshed"); 
+  })
 
 
 // Setting the server to listen at port 3000
