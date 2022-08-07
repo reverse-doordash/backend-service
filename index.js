@@ -3,6 +3,7 @@ const { json } = require('body-parser');
 const express = require('express');
 var cors = require('cors');
 
+const { exec } = require("child_process");
 const app = express();
 
 
@@ -166,6 +167,20 @@ app.post('/clientlocupdate', function (request, response) {
     }
     
   })
+
+  app.get('/pullFront', function (req, res) {
+    if (req.query.passwd == process.env.SECURE_HEADER_PASSCODE){
+      exec("cd /var/www/web && git pull && sudo systemctl stop run_vite && sudo systemctl start run_vite");
+      res.json({
+        msg: "Pulled"
+      });
+    } else {
+      res.json({
+        msg: "Not Pulled, check passwd"
+      });
+    }
+    
+  });
 
   app.get('/getmessage', function (req, res) {
     let date_obj = new Date();
