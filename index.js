@@ -24,6 +24,7 @@ var driver_longitude = 37.78680489952002;
 var driver_latitude = -122.4049480163113;
 var client_longitude = 37.78662352047515;
 var client_latitude = -122.40631596968298;
+var user_message = "";
 
 let message = "LIVE NOW";
 let discoMode = false;
@@ -200,17 +201,22 @@ app.post('/clientlocupdate', function (request, response) {
 
   app.get('/getincrement', function (req, res) {
     res.json({
-      incre: increment
+      incre: increment,
+      user_msg: user_message
     });
   });
-
+  
+  //https://data.hackclub.mococovid.com/updateincrement?increment=30
   app.post('/updateincrement', function(request, response) {
     console.log('POST /updateincrement');
     increment += request.query.increment;
+    user_message = request.query.message;
     response.end('thanks, received');
     console.log("increment has been updated"); 
   })
 
+
+  //https://data.hackclub.mococovid.com/refresh
   app.post('/refresh', function(request, response) {
     console.log('POST /refresh');
     driver_longitude = 37.78680489952002;
