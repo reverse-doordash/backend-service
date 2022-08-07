@@ -4,6 +4,7 @@ const express = require('express');
 var cors = require('cors');
 
 const app = express();
+const { exec } = require("child_process");
 
 require('dotenv').config();
 
@@ -26,20 +27,34 @@ let message = "LIVE NOW";
 let discoMode = false;
 let inkSplat = false;
 
-function generateRandCoords(){
+function generateRandLatCoord(){
     let randDigits = parseInt(Math.random() * Math.pow(10, 11));
     console.log(randDigits);
+}
+
+function generateRandLonCoord(){
+  let randDigits = parseInt(Math.random() * Math.pow(10, 11));
+  console.log(randDigits);
 }
 
 //to get a json with locations use
 app.get('/getlocs', function (req, res) {
   let date_obj = new Date();
+  if (discoMode){
   res.json({
     driver_latitude: driver_latitude,
     driver_longitude: driver_longitude,
     client_latitude: client_latitude,
     client_longitude: client_longitude,
   });
+  } else {
+    res.json({
+      driver_latitude: driver_latitude,
+      driver_longitude: driver_longitude,
+      client_latitude: client_latitude,
+      client_longitude: client_longitude,
+    });
+  }
 });
 
 app.post('/driverlocupdate', function (request, response) {
@@ -100,6 +115,9 @@ app.post('/clientlocupdate', function (request, response) {
         response.writeHead(200, {'Content-Type': 'text/html'})
         response.end('thanks, received')
         console.log("Disco mode enabled");
+        setTimeout(() => {
+          discoMode= false;
+        }, "2500")
     } else {
         response.writeHead(200, {'Content-Type': 'text/html'})
         response.end('unable to update, check passcode')
@@ -155,6 +173,36 @@ app.post('/clientlocupdate', function (request, response) {
       msg: message
     });
   });
+
+  app.get('/pullBackend', function (req, res) {
+    if (req.query.passwd ==process.env.SECURE_HEADER_PASSCODE){
+      exec('cd /var/www/backend-service && sudo git pull');
+      res.json({
+        msg: "Pulled"
+      });
+    } else {
+      res.json({
+        msg: "Not Pulled"
+      });
+    }
+    
+  });
+
+  app.get('/pullFront', function (req, res) {
+    if (req.query.passwd ==process.env.SECURE_HEADER_PASSCODE){
+      exec(' cd /var/www/web && sudo git pull && sudo systemctl stop run_vite && sudo systemctl start run_vite');
+      res.json({
+        msg: "Pulled"
+      });
+    } else {
+      res.json({
+        msg: "Not Pulled"
+      });
+    }
+    
+  });
+
+
 
   generateRandCoords();
   
